@@ -1,6 +1,6 @@
 name: Json Rest Server
 port: 8080
-host: 192.168.10.113
+host: 10.90.13.228
 database: database.json
 
 # auth:

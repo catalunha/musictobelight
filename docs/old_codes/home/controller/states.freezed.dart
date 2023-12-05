@@ -19,7 +19,7 @@ mixin _$AudioState {
   AudioStateStatus get status => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   AudioPlayer? get audioPlayer => throw _privateConstructorUsedError;
-  Duration? get duration => throw _privateConstructorUsedError;
+  Duration get duration => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AudioStateCopyWith<AudioState> get copyWith =>
@@ -36,7 +36,7 @@ abstract class $AudioStateCopyWith<$Res> {
       {AudioStateStatus status,
       String? message,
       AudioPlayer? audioPlayer,
-      Duration? duration});
+      Duration duration});
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$AudioStateCopyWithImpl<$Res, $Val extends AudioState>
     Object? status = null,
     Object? message = freezed,
     Object? audioPlayer = freezed,
-    Object? duration = freezed,
+    Object? duration = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -70,10 +70,10 @@ class _$AudioStateCopyWithImpl<$Res, $Val extends AudioState>
           ? _value.audioPlayer
           : audioPlayer // ignore: cast_nullable_to_non_nullable
               as AudioPlayer?,
-      duration: freezed == duration
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as Duration?,
+              as Duration,
     ) as $Val);
   }
 }
@@ -90,7 +90,7 @@ abstract class _$$AudioStateImplCopyWith<$Res>
       {AudioStateStatus status,
       String? message,
       AudioPlayer? audioPlayer,
-      Duration? duration});
+      Duration duration});
 }
 
 /// @nodoc
@@ -107,7 +107,7 @@ class __$$AudioStateImplCopyWithImpl<$Res>
     Object? status = null,
     Object? message = freezed,
     Object? audioPlayer = freezed,
-    Object? duration = freezed,
+    Object? duration = null,
   }) {
     return _then(_$AudioStateImpl(
       status: null == status
@@ -122,10 +122,10 @@ class __$$AudioStateImplCopyWithImpl<$Res>
           ? _value.audioPlayer
           : audioPlayer // ignore: cast_nullable_to_non_nullable
               as AudioPlayer?,
-      duration: freezed == duration
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as Duration?,
+              as Duration,
     ));
   }
 }
@@ -137,7 +137,7 @@ class _$AudioStateImpl implements _AudioState {
       {this.status = AudioStateStatus.initial,
       this.message,
       this.audioPlayer,
-      this.duration});
+      this.duration = const Duration()});
 
   @override
   @JsonKey()
@@ -147,7 +147,8 @@ class _$AudioStateImpl implements _AudioState {
   @override
   final AudioPlayer? audioPlayer;
   @override
-  final Duration? duration;
+  @JsonKey()
+  final Duration duration;
 
   @override
   String toString() {
@@ -183,7 +184,7 @@ abstract class _AudioState implements AudioState {
       {final AudioStateStatus status,
       final String? message,
       final AudioPlayer? audioPlayer,
-      final Duration? duration}) = _$AudioStateImpl;
+      final Duration duration}) = _$AudioStateImpl;
 
   @override
   AudioStateStatus get status;
@@ -192,7 +193,7 @@ abstract class _AudioState implements AudioState {
   @override
   AudioPlayer? get audioPlayer;
   @override
-  Duration? get duration;
+  Duration get duration;
   @override
   @JsonKey(ignore: true)
   _$$AudioStateImplCopyWith<_$AudioStateImpl> get copyWith =>
