@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../root_routes.dart';
+import '../../routes_root.dart';
 import 'controller/controllers.dart';
 
 class SplashPage extends ConsumerWidget {
@@ -20,13 +20,13 @@ class SplashPage extends ConsumerWidget {
             switch (data) {
               case true:
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  RootRoutes.home,
+                  RoutesRoot.home,
                   (route) => false,
                 );
                 break;
               case false:
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  RootRoutes.login,
+                  RoutesRoot.login,
                   (route) => false,
                 );
                 break;

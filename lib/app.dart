@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'root_routes.dart';
+import 'routes_root.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Music to be light',
       initialRoute: '/',
-      onGenerateRoute: rootOnGenerateRoute,
+      onGenerateRoute: onGenerateRouteRoot,
     );
   }
 }

@@ -22,6 +22,8 @@ flutter pub add dev:json_serializable
 ## others
 ```
 flutter pub add audioplayers
+flutter pub add audio_session
+flutter pub add just_audio
 ```
 
 ## analysis_options.yaml

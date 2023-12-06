@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../root_routes.dart';
+import '../../routes_root.dart';
 import '../utils/app_loader.dart';
 import '../utils/app_messages.dart';
 import '../utils/app_state_status.dart';
@@ -30,7 +30,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
         case AppStateStatus.loaded:
           hideLoader(context);
           Navigator.of(context).pushNamedAndRemoveUntil(
-            RootRoutes.home,
+            RoutesRoot.home,
             (route) => false,
           );
           break;
