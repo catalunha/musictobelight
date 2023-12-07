@@ -20,3 +20,11 @@ https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html
 https://medium.com/knowledgelens/flutter-applifecyclestate-management-3cc745f0170d
 
 https://medium.com/codex/flutter-lifecycle-an-in-depth-look-783b07e8f706
+
+# Acrescentado em
+android/app/src/main/AndroidManifest.xml
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:usesCleartextTraffic="true"

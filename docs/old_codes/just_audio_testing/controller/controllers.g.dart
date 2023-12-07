@@ -6,7 +6,7 @@ part of 'controllers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$audioControllerHash() => r'5d76b4149d707d5d02b17b57138f4727a8121d10';
+String _$audioControllerHash() => r'5109700a48990e6c492b53a436f176b1b80130e6';
 
 /// Copied from Dart SDK
 class _SystemHash {

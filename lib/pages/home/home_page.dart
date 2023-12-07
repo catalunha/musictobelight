@@ -39,7 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 Navigator.of(context).pushNamed(
                   RoutesRoot.audioPlayerTesting,
-                  arguments: 'http://192.168.10.113:8080/storage/audio03.wav',
+                  arguments: 'http://10.90.5.186:8080/storage/audio03.wav',
                 );
               },
             ),
