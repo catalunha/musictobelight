@@ -1,0 +1,15 @@
+import 'package:dio/dio.dart';
+
+import '../../core/exceptions/repository_exception.dart';
+import '../../core/functional_program/either.dart';
+import '../../models/profile_model.dart';
+import '../../models/user_model.dart';
+
+abstract interface class ProfileRepository {
+  Future<Either<RepositoryException, ProfileModel>> me(UserModel userModel);
+  Future<Either<RepositoryException, List<ProfileModel>>> list();
+  Future<Either<RepositoryException, ProfileModel>> read(String id);
+  Future<Either<RepositoryException, Nil>> update(String id, FormData data);
+  // Future<Either<RepositoryException, Nil>> upload(
+  //     String id, Map<String, dynamic> data);
+}

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/remote/api/base_urls.dart';
 import '../../routes_root.dart';
+import '../new_password/new_password_page.dart';
 import '../utils/app_loader.dart';
 import '../utils/app_messages.dart';
-import '../utils/app_state_status.dart';
-import 'controller/controllers.dart';
+import 'controller/providers.dart';
+import 'controller/states.dart';
+import 'widgets/email_widget.dart';
+import 'widgets/new_password_widget.dart';
+import 'widgets/password_widget.dart';
+import 'widgets/submit_widget.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -16,57 +22,86 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage>
     with AppMessages, AppLoader {
+  final formKey = GlobalKey<FormState>();
+  final emailKey = GlobalKey<FormFieldState>();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    // TODO remover email login preenchidos para testes
+    if (const bool.fromEnvironment('development_mode')) {
+      email.text = 'catalunha.mj@gmail.com';
+      password.text = 'cata-123QWE!@#';
+    }
+  }
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    ref.listen(loginControllerProvider, (_, next) {
-      switch (next.status) {
-        case AppStateStatus.initial:
-          break;
-        case AppStateStatus.loading:
-          showLoader(context);
-          break;
-        case AppStateStatus.updated:
-          break;
-        case AppStateStatus.loaded:
-          hideLoader(context);
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            RoutesRoot.home,
-            (route) => false,
-          );
-          break;
-        case AppStateStatus.message:
-          break;
-      }
-    });
+    ref.listen(
+      loginControllerProvider,
+      (previous, next) {
+        switch (next.status) {
+          case LoginStateStatus.initial:
+            break;
+          case LoginStateStatus.loading:
+            showLoader(context);
+          case LoginStateStatus.updated:
+            hideLoader(context);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return NewPasswordPage(email: email.text);
+                },
+              ),
+            );
+          case LoginStateStatus.success:
+            hideLoader(context);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(RoutesRoot.home, (route) => false);
+          case LoginStateStatus.error:
+            hideLoader(context);
+            showMessageError(context, next.error!);
+        }
+      },
+    );
     return Scaffold(
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('LOGIN'),
-          const Text('MUSIC TO BE LIGHT'),
-          const SizedBox(height: 50),
-          SizedBox(
-            width: 200,
-            child: TextFormField(
-              decoration: const InputDecoration(labelText: 'Informe o email'),
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const Text('BaseUrl: ${ApiV1EndPoints.baseurl}'),
+                const Text('Seja bem vindo ao'),
+                const Text(String.fromEnvironment('version')),
+                const SizedBox(height: 20),
+                EmailWidget(
+                  textFormFieldKey: emailKey,
+                  textEditingController: email,
+                ),
+                const SizedBox(height: 20),
+                PasswordWidget(textEditingController: password),
+                const SizedBox(height: 20),
+                SubmitWidget(
+                  formKey: formKey,
+                  email: email,
+                  password: password,
+                ),
+                const SizedBox(height: 20),
+                NewPasswordWidget(emailKey: emailKey, email: email),
+              ],
             ),
           ),
-          SizedBox(
-            width: 200,
-            child: TextFormField(
-              decoration: const InputDecoration(labelText: 'Informe a senha'),
-              obscureText: true,
-            ),
-          ),
-          const SizedBox(height: 50),
-          ElevatedButton(
-              onPressed: () async {
-                await ref.read(loginControllerProvider.notifier).access();
-              },
-              child: const Text('Acessar')),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }

@@ -19,11 +19,24 @@ flutter pub add dev:riverpod_lint
 flutter pub add dev:freezed
 flutter pub add dev:json_serializable
 ```
+
+## API
+```
+flutter pub add dio
+flutter pub add retrofit
+flutter pub add dev:retrofit_generator
+
+flutter pub add shared_preferences
+```
+
 ## others
 ```
 flutter pub add audioplayers
-flutter pub add audio_session
-flutter pub add just_audio
+flutter pub add validatorless
+flutter pub add intl
+flutter pub add url_launcher
+flutter pub add image_picker
+flutter pub add file_picker
 ```
 
 ## analysis_options.yaml

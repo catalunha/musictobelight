@@ -1,50 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../routes_root.dart';
+import '../../repositories/providers.dart';
+import '../utils/app_loader.dart';
+import '../utils/app_messages.dart';
+import 'widgets/home_popmenu.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({
-    super.key,
-  });
-
+  const HomePage({super.key});
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>
+    with AppMessages, AppLoader {
   @override
   Widget build(BuildContext context) {
+    final profile = ref.watch(meProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MUSIC TO BE LIGHT'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  RoutesRoot.login,
-                  (route) => false,
-                );
-              },
-              icon: const Icon(Icons.exit_to_app))
-        ],
+        title: Text('Olá, ${profile.name ?? profile.user.email}'),
+        actions: const [HomePopMenu()],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.audio_file),
-              title: const Text('audio03.wav'),
-              subtitle: const Text('Eu contado. AudioPlayerTesting'),
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                  RoutesRoot.audioPlayerTesting,
-                  arguments: 'http://10.90.5.186:8080/storage/audio03.wav',
-                );
-              },
-            ),
-          ],
-        ),
+      body: const Column(
+        children: [],
       ),
     );
   }

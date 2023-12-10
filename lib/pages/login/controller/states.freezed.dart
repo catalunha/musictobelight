@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginState {
-  AppStateStatus get status => throw _privateConstructorUsedError;
-  String? get message => throw _privateConstructorUsedError;
+  LoginStateStatus get status => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $LoginStateCopyWith<$Res> {
           LoginState value, $Res Function(LoginState) then) =
       _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
-  $Res call({AppStateStatus status, String? message});
+  $Res call({LoginStateStatus status, String? error});
 }
 
 /// @nodoc
@@ -47,16 +47,16 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @override
   $Res call({
     Object? status = null,
-    Object? message = freezed,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as AppStateStatus,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+              as LoginStateStatus,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -70,7 +70,7 @@ abstract class _$$LoginStateImplCopyWith<$Res>
       __$$LoginStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppStateStatus status, String? message});
+  $Res call({LoginStateStatus status, String? error});
 }
 
 /// @nodoc
@@ -85,16 +85,16 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? message = freezed,
+    Object? error = freezed,
   }) {
     return _then(_$LoginStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as AppStateStatus,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+              as LoginStateStatus,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -103,17 +103,17 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoginStateImpl implements _LoginState {
-  _$LoginStateImpl({this.status = AppStateStatus.initial, this.message});
+  _$LoginStateImpl({this.status = LoginStateStatus.initial, this.error});
 
   @override
   @JsonKey()
-  final AppStateStatus status;
+  final LoginStateStatus status;
   @override
-  final String? message;
+  final String? error;
 
   @override
   String toString() {
-    return 'LoginState(status: $status, message: $message)';
+    return 'LoginState(status: $status, error: $error)';
   }
 
   @override
@@ -122,11 +122,11 @@ class _$LoginStateImpl implements _LoginState {
         (other.runtimeType == runtimeType &&
             other is _$LoginStateImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, message);
+  int get hashCode => Object.hash(runtimeType, status, error);
 
   @JsonKey(ignore: true)
   @override
@@ -136,13 +136,13 @@ class _$LoginStateImpl implements _LoginState {
 }
 
 abstract class _LoginState implements LoginState {
-  factory _LoginState({final AppStateStatus status, final String? message}) =
+  factory _LoginState({final LoginStateStatus status, final String? error}) =
       _$LoginStateImpl;
 
   @override
-  AppStateStatus get status;
+  LoginStateStatus get status;
   @override
-  String? get message;
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>

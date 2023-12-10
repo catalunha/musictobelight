@@ -1,0 +1,32 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "fluxus5-android",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define-from-file",
+        "dart_define.json"
+      ],
+    },
+    {
+      "name": "fluxus5-web",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define-from-file",
+        "dart_define.json"
+      ],
+      "args": [
+        "-d",
+        "chrome", //"web-server"
+        "--web-port",
+        "8080",
+      ]
+    }
+  ]
+}

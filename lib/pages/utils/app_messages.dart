@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/config.dart';
+import '../../core/app_config.dart';
 
 mixin AppMessages {
   void showMessageError(BuildContext context, String msg) {

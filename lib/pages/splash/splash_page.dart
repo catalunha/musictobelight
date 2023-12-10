@@ -1,71 +1,60 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../routes_root.dart';
-import 'controller/controllers.dart';
+import 'controller/providers.dart';
+import 'controller/states.dart';
 
 class SplashPage extends ConsumerWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final splash = ref.watch(splashControllerProvider);
-    ref.listen<AsyncValue<bool>>(
-      splashControllerProvider,
-      (_, next) {
-        next.when(
-          data: (data) {
-            switch (data) {
-              case true:
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  RoutesRoot.home,
-                  (route) => false,
-                );
-                break;
-              case false:
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  RoutesRoot.login,
-                  (route) => false,
-                );
-                break;
-            }
-          },
-          error: (e, s) {
-            log('Erro no Splash. Impossivel continuar');
-          },
-          loading: () {},
-        );
-      },
-    );
-    return Scaffold(
-      body: splash.when(
+    final splashController = ref.watch(splashControllerProvider);
+    ref.listen(splashControllerProvider, (previous, next) {
+      next.when(
         data: (data) {
-          return const Center(
-            child: Text('Inicialização ok.'),
-          );
+          switch (data.status) {
+            case SplashStateStatus.login:
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
+            case SplashStateStatus.logged:
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RoutesRoot.home, (route) => false);
+            case _:
+              break;
+          }
         },
-        error: (error, stacktrace) => const Center(
-          child: Center(
-            child: Text('Oops...Um erro apareceu'),
-          ),
-        ),
-        loading: () => const Center(
+        error: (error, stackTrace) {
+          return Navigator.of(context)
+              .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
+        },
+        loading: () {},
+      );
+    });
+    return Scaffold(
+        body: splashController.when(
+      data: (data) {
+        return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('SPLASH'),
-              Text('MUSIC TO BE LIGHT'),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Preparando ambiente ...'),
-              CircularProgressIndicator(),
+              const CircularProgressIndicator(),
+              for (String msg in data.msg) Text(msg)
             ],
           ),
-        ),
-      ),
-    );
+        );
+      },
+      error: (error, stackTrace) {
+        return const Center(
+          child: Text('Oops. Ocorreu algum erro'),
+        );
+      },
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    ));
   }
 }

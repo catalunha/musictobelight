@@ -1,13 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../utils/app_state_status.dart';
-
 part 'states.freezed.dart';
 
+enum LoginStateStatus {
+  initial,
+  loading,
+  updated,
+  success,
+  error,
+}
+
 @freezed
-class LoginState with _$LoginState {
+abstract class LoginState with _$LoginState {
   factory LoginState({
-    @Default(AppStateStatus.initial) AppStateStatus status,
-    String? message,
+    @Default(LoginStateStatus.initial) LoginStateStatus status,
+    String? error,
   }) = _LoginState;
 }
