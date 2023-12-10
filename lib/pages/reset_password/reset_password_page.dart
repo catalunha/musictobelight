@@ -10,18 +10,18 @@ import 'widgets/number_widget.dart';
 import 'widgets/password_widget.dart';
 import 'widgets/submit_widget.dart';
 
-class NewPasswordPage extends ConsumerStatefulWidget {
+class ResetPasswordPage extends ConsumerStatefulWidget {
   final String email;
-  const NewPasswordPage({
+  const ResetPasswordPage({
     Key? key,
     required this.email,
   }) : super(key: key);
 
   @override
-  ConsumerState<NewPasswordPage> createState() => _NewPasswordPageState();
+  ConsumerState<ResetPasswordPage> createState() => _NewPasswordPageState();
 }
 
-class _NewPasswordPageState extends ConsumerState<NewPasswordPage>
+class _NewPasswordPageState extends ConsumerState<ResetPasswordPage>
     with AppMessages, AppLoader {
   final formKey = GlobalKey<FormState>();
   final number = TextEditingController();

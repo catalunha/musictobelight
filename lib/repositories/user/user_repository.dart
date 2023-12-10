@@ -5,10 +5,15 @@ import '../../models/user_model.dart';
 abstract interface class UserRepository {
   Future<Either<RepositoryException, String>> login(
       String email, String password);
-  Future<Either<RepositoryException, Nil>> create(
-      String email, String password);
-  Future<Either<RepositoryException, Nil>> resetpassword(String email);
-  Future<Either<RepositoryException, Nil>> newpassword({
+  Future<Either<RepositoryException, Nil>> createSendCode(String email);
+  Future<Either<RepositoryException, Nil>> createConfirmCode({
+    required String email,
+    required String password,
+    required String number,
+  });
+
+  Future<Either<RepositoryException, Nil>> resetpasswordSendCode(String email);
+  Future<Either<RepositoryException, Nil>> resetpasswordConfirmCode({
     required String email,
     required String password,
     required String number,

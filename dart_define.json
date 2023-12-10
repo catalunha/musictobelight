@@ -1,5 +1,5 @@
 {
-  "version": "Music To Be Light versão 0.0.0",
+  "version": "Versão 0.0.0",
   "development_mode": true,
   "url_api_dev": "http://192.168.10.113:8000",
   "url_api_prod": "https://fluxus-api.proclinicakids.com.br"

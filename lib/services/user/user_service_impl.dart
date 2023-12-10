@@ -28,17 +28,17 @@ class UserServiceImpl implements UserService {
     }
   }
 
-  @override
-  Future<Either<ServiceException, Nil>> register(
-      String email, String password) async {
-    final result = await userRepository.create(email, password);
-    switch (result) {
-      case Failure(:final exception):
-        return Failure(ServiceException(message: exception.message));
-      case Success():
-        return login(email, password);
-    }
-  }
+  // @override
+  // Future<Either<ServiceException, Nil>> register(
+  //     String email, String password) async {
+  //   final result = await userRepository.create(email, password);
+  //   switch (result) {
+  //     case Failure(:final exception):
+  //       return Failure(ServiceException(message: exception.message));
+  //     case Success():
+  //       return login(email, password);
+  //   }
+  // }
 
   @override
   Future<bool> verifyToken() async {
@@ -59,22 +59,22 @@ class UserServiceImpl implements UserService {
         .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
   }
 
-  @override
-  Future<Either<ServiceException, Nil>> newpassword({
-    required String email,
-    required String password,
-    required String number,
-  }) async {
-    final result = await userRepository.newpassword(
-      email: email,
-      password: password,
-      number: number,
-    );
-    switch (result) {
-      case Failure(:final exception):
-        return Failure(ServiceException(message: exception.message));
-      case Success():
-        return login(email, password);
-    }
-  }
+  // @override
+  // Future<Either<ServiceException, Nil>> newpassword({
+  //   required String email,
+  //   required String password,
+  //   required String number,
+  // }) async {
+  //   final result = await userRepository.resetpasswordConfirmCode(
+  //     email: email,
+  //     password: password,
+  //     number: number,
+  //   );
+  //   switch (result) {
+  //     case Failure(:final exception):
+  //       return Failure(ServiceException(message: exception.message));
+  //     case Success():
+  //       return login(email, password);
+  //   }
+  // }
 }

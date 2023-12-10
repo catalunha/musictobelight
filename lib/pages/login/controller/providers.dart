@@ -42,30 +42,28 @@ class LoginController extends _$LoginController {
     }
   }
 
-  // Future<void> create(String email, String password) async {
-  //   state = state.copyWith(status: LoginStateStatus.loading);
-  //   final userService = ref.read(userServiceProvider);
-  //   final result = await userService.register(email, password);
-  //   switch (result) {
-  //     case Failure(:final exception):
-  //       state = state.copyWith(
-  //           status: LoginStateStatus.error, error: exception.message);
-  //     case Success():
-  //       ref.invalidate(meUserProvider);
-  //       // ref.invalidate(meProfileProvider);
-  //       state = state.copyWith(status: LoginStateStatus.success);
-  //   }
-  // }
-
-  Future<void> resetpassword(String email) async {
+  Future<void> resetpasswordSendCode(String email) async {
     state = state.copyWith(status: LoginStateStatus.loading);
-    final result = await ref.read(userRepositoryProvider).resetpassword(email);
+    final result =
+        await ref.read(userRepositoryProvider).resetpasswordSendCode(email);
     switch (result) {
       case Failure(:final exception):
         state = state.copyWith(
             status: LoginStateStatus.error, error: exception.message);
       case Success():
-        state = state.copyWith(status: LoginStateStatus.updated);
+        state = state.copyWith(status: LoginStateStatus.resetPassword);
+    }
+  }
+
+  Future<void> createSendCode(String email) async {
+    state = state.copyWith(status: LoginStateStatus.loading);
+    final result = await ref.read(userRepositoryProvider).createSendCode(email);
+    switch (result) {
+      case Failure(:final exception):
+        state = state.copyWith(
+            status: LoginStateStatus.error, error: exception.message);
+      case Success():
+        state = state.copyWith(status: LoginStateStatus.createAccount);
     }
   }
 }

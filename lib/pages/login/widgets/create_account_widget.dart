@@ -5,8 +5,8 @@ import '../../utils/app_loader.dart';
 import '../../utils/app_messages.dart';
 import '../controller/providers.dart';
 
-class NewPasswordWidget extends ConsumerStatefulWidget {
-  const NewPasswordWidget({
+class CreateAccountWidget extends ConsumerStatefulWidget {
+  const CreateAccountWidget({
     super.key,
     required this.emailKey,
     required this.email,
@@ -16,10 +16,11 @@ class NewPasswordWidget extends ConsumerStatefulWidget {
   final TextEditingController email;
 
   @override
-  ConsumerState<NewPasswordWidget> createState() => _NewPasswordWidgetState();
+  ConsumerState<CreateAccountWidget> createState() =>
+      _CreateAccountWidgetState();
 }
 
-class _NewPasswordWidgetState extends ConsumerState<NewPasswordWidget>
+class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     with AppMessages, AppLoader {
   @override
   Widget build(BuildContext context) {
@@ -34,10 +35,10 @@ class _NewPasswordWidgetState extends ConsumerState<NewPasswordWidget>
           case true:
             ref
                 .read(loginControllerProvider.notifier)
-                .resetpassword(widget.email.text);
+                .createSendCode(widget.email.text);
         }
       },
-      child: const Text('Solicitar nova senha'),
+      child: const Text('Criar uma conta.'),
     );
   }
 }

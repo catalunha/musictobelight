@@ -36,14 +36,14 @@ class _SubmitWidgetState extends ConsumerState<SubmitWidget>
                 context, 'Campos obrigatórios não foram preenchidos');
 
           case true:
-            ref.read(newPasswordControllerProvider.notifier).newpassword(
+            ref.read(newPasswordControllerProvider.notifier).createConfirmCode(
                   email: widget.email,
                   number: widget.number.text,
                   password: widget.password.text,
                 );
         }
       },
-      child: const Text('Alterar senha'),
+      child: const Text('Criar conta'),
     );
   }
 }

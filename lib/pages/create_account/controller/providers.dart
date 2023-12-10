@@ -1,7 +1,7 @@
+import 'package:musictobeligth/repositories/providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/functional_program/either.dart';
-import '../../../services/providers.dart';
 import 'states.dart';
 
 part 'providers.g.dart';
@@ -13,12 +13,12 @@ class NewPasswordController extends _$NewPasswordController {
     return NewPasswordState();
   }
 
-  Future<void> newpassword(
+  Future<void> createConfirmCode(
       {required String email,
       required String number,
       required String password}) async {
     state = state.copyWith(status: NewPasswordStateStatus.loading);
-    final result = await ref.read(userServiceProvider).newpassword(
+    final result = await ref.read(userRepositoryProvider).createConfirmCode(
           email: email,
           password: password,
           number: number,

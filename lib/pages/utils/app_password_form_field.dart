@@ -7,12 +7,14 @@ class AppPasswordFormField extends StatefulWidget {
   final String label;
   final String? hint;
   final FormFieldValidator<String>? validator;
+  final Key? textFormFieldKey;
   const AppPasswordFormField({
     Key? key,
     required this.textEditingController,
     required this.label,
     this.hint,
     this.validator,
+    this.textFormFieldKey,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class _AppPasswordFormFieldState extends State<AppPasswordFormField> {
     return Padding(
       padding: const EdgeInsets.only(left: 80, right: 80),
       child: TextFormField(
+        key: widget.textFormFieldKey,
         controller: widget.textEditingController,
         validator: widget.validator,
         cursorColor: AppColors.red,

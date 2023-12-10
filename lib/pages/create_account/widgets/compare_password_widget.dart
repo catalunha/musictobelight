@@ -3,27 +3,28 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../utils/app_password_form_field.dart';
 
-class PasswordWidget extends StatelessWidget {
+class ComparePasswordWidget extends StatelessWidget {
   final TextEditingController textEditingController;
-  final Key? textFormFieldKey;
+  final TextEditingController textEditingControllerCompare;
 
-  const PasswordWidget({
-    Key? key,
+  const ComparePasswordWidget({
+    super.key,
     required this.textEditingController,
-    this.textFormFieldKey,
-  }) : super(key: key);
+    required this.textEditingControllerCompare,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppPasswordFormField(
-      textFormFieldKey: textFormFieldKey,
       textEditingController: textEditingController,
-      label: 'Informe sua senha',
+      label: 'Repita a senha',
       hint: 'Mínimo de 6 digitos',
       validator: Validatorless.multiple(
         [
           Validatorless.required('Informação obrigatória'),
           Validatorless.min(6, 'Mínimo de 6 caracteres'),
+          Validatorless.compare(
+              textEditingControllerCompare, 'Senhas não conferem'),
         ],
       ),
     );
