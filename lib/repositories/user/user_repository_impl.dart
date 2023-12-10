@@ -216,8 +216,8 @@ class UserRepositoryImpl implements UserRepository {
           'Erro desconhecido ao realizar: UserRepositoryImpl.createSendCode';
       if (e.response != null &&
           e.response!.statusCode != null &&
-          e.response!.statusCode == 404) {
-        msg = 'Não foi possivel criar a conta.';
+          e.response!.statusCode == 400) {
+        msg = e.response!.data['detail'];
       }
       return Failure(RepositoryException(message: msg));
     }
