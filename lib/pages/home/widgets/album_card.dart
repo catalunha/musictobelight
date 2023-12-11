@@ -18,7 +18,7 @@ class AlbumCard extends ConsumerWidget {
         // trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
         onTap: () {
           ref.watch(albumIdSelectedProvider.notifier).set(model.id);
-          Navigator.of(context).pushNamed(RoutesRoot.soundList);
+          Navigator.of(context).pushNamed(RouteName.soundList);
         },
       ),
     );

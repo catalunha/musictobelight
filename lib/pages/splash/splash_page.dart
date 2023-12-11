@@ -17,17 +17,17 @@ class SplashPage extends ConsumerWidget {
           switch (data.status) {
             case SplashStateStatus.login:
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
+                  .pushNamedAndRemoveUntil(RouteName.login, (route) => false);
             case SplashStateStatus.logged:
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil(RoutesRoot.home, (route) => false);
+                  .pushNamedAndRemoveUntil(RouteName.home, (route) => false);
             case _:
               break;
           }
         },
         error: (error, stackTrace) {
           return Navigator.of(context)
-              .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
+              .pushNamedAndRemoveUntil(RouteName.login, (route) => false);
         },
         loading: () {},
       );

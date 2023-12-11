@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musictobeligth/pages/sound/list/sound_list_page.dart';
 
+import 'pages/album/upsert/album_upsert_page.dart';
 import 'pages/sound/view/sound_view_page.dart';
 import 'pages/home/home_page.dart';
 import 'pages/login/login_page.dart';
@@ -8,34 +9,39 @@ import 'pages/not_found_404/not_found_404.dart';
 import 'pages/profile/update/profile_update_page.dart';
 import 'pages/splash/splash_page.dart';
 
-class RoutesRoot {
+class RouteName {
   static const String splash = '/';
   static const String login = '/login';
   static const String home = '/home';
   static const String profileUpdate = '/profileUpdate';
+  static const String albumUpsert = '/albumUpsert';
   static const String soundList = '/soundList';
-  static const String soundView = '/soundViewPage';
+  static const String soundView = '/soundView';
 }
 
 Route<dynamic> onGenerateRouteRoot(RouteSettings settings) {
   WidgetBuilder builder;
   switch (settings.name) {
-    case RoutesRoot.splash:
+    case RouteName.splash:
       builder = (_) => const SplashPage();
       break;
-    case RoutesRoot.login:
+    case RouteName.login:
       builder = (_) => const LoginPage();
       break;
-    case RoutesRoot.home:
+    case RouteName.home:
       builder = (_) => const HomePage();
       break;
-    case RoutesRoot.profileUpdate:
+    case RouteName.profileUpdate:
       builder = (_) => const ProfileUpdatePage();
       break;
-    case RoutesRoot.soundList:
+    case RouteName.albumUpsert:
+      String? id = settings.arguments as String?;
+      builder = (_) => AlbumUpsertPage(id: id);
+      break;
+    case RouteName.soundList:
       builder = (_) => const SoundListPage();
       break;
-    case RoutesRoot.soundView:
+    case RouteName.soundView:
       builder = (_) => const SoundViewPage();
       break;
     default:

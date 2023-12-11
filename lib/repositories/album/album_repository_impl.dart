@@ -34,7 +34,7 @@ class AlbumRepositoryImpl implements AlbumRepository {
       return Failure(RepositoryException(message: e.message));
     }
   }
-/*
+
   @override
   Future<Either<RepositoryException, AlbumModel>> read(String id) async {
     try {
@@ -55,11 +55,10 @@ class AlbumRepositoryImpl implements AlbumRepository {
   }
 
   @override
-  Future<Either<RepositoryException, AlbumModel>> create(
-      AlbumModel albumModel) async {
+  Future<Either<RepositoryException, String>> create(FormData data) async {
     try {
       final albumRest = AlbumRest(dioClient.auth);
-      final albumModelNew = await albumRest.create(albumModel);
+      final albumModelNew = await albumRest.create(data);
       return Success(albumModelNew);
     } on DioException catch (e, s) {
       log('Erro de DioException em AlbumRepositoryImpl.create',
@@ -75,13 +74,12 @@ class AlbumRepositoryImpl implements AlbumRepository {
   }
 
   @override
-  Future<Either<RepositoryException, AlbumModel>> update(
-      AlbumModel albumModel) async {
+  Future<Either<RepositoryException, Nil>> update(
+      String id, FormData data) async {
     try {
       final albumRest = AlbumRest(dioClient.auth);
-      final albumModelNew =
-          await albumRest.update(albumModel.id!, albumModel);
-      return Success(albumModelNew);
+      await albumRest.update(id, data);
+      return Success(Nil());
     } on DioException catch (e, s) {
       log('Erro de DioException em AlbumRepositoryImpl.update',
           name: 'AlbumRepositoryImpl.update', error: e, stackTrace: s);
@@ -116,5 +114,4 @@ class AlbumRepositoryImpl implements AlbumRepository {
       return Failure(RepositoryException(message: e as String));
     }
   }
-  */
 }

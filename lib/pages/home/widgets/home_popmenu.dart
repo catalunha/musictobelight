@@ -19,7 +19,7 @@ class HomePopMenu extends ConsumerWidget {
               label: const Text('Editar perfil'),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.of(context).pushNamed(RoutesRoot.profileUpdate);
+                Navigator.of(context).pushNamed(RouteName.profileUpdate);
               },
               icon: const Icon(Icons.person_outline_outlined),
             ),

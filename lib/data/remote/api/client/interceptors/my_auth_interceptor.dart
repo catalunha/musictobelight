@@ -36,7 +36,7 @@ class MyAuthInterceptor extends Interceptor {
           (response.statusCode == HttpStatus.forbidden ||
               response.statusCode == HttpStatus.unauthorized)) {
         Navigator.of(NavigationGlobalKey.instance.navigationKey.currentContext!)
-            .pushNamedAndRemoveUntil(RoutesRoot.login, (route) => false);
+            .pushNamedAndRemoveUntil(RouteName.login, (route) => false);
       }
     }
     handler.reject(err);

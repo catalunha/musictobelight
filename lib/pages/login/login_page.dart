@@ -80,7 +80,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
           case LoginStateStatus.success:
             hideLoader(context);
             Navigator.of(context)
-                .pushNamedAndRemoveUntil(RoutesRoot.home, (route) => false);
+                .pushNamedAndRemoveUntil(RouteName.home, (route) => false);
           case LoginStateStatus.error:
             hideLoader(context);
             showMessageError(context, next.error!);

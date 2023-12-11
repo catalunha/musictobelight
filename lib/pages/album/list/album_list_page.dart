@@ -19,7 +19,6 @@ class _AlbumListState extends ConsumerState<AlbumList>
     with AppMessages, AppLoader {
   @override
   Widget build(BuildContext context) {
-    final profile = ref.watch(meProfileProvider)!;
     final list = ref.watch(albumListProvider);
 
     return list.when(data: (data) {

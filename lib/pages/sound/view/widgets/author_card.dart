@@ -31,9 +31,6 @@ class AuthorCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: AppViewImage(
-                //   imageUrl: data.sound.image == null
-                // ? null
-                // : '',
                 imageUrl: imageUrl,
                 maxHeightImage: 60,
                 maxWidthImage: 60,

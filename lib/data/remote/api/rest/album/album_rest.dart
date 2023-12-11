@@ -11,19 +11,18 @@ part 'album_rest.g.dart';
 abstract class AlbumRest {
   factory AlbumRest(DioClient dio) = _AlbumRest;
 
-  // @POST('/api/commons/expertise/')
-  // Future<AlbumModel> create(@Body() AlbumModel model);
+  @POST('/api/musics/album/')
+  Future<String> create(@Body() FormData data);
 
   @GET('/api/musics/album/')
   Future<List<AlbumModelList>> list();
 
-  // @GET('/api/commons/expertise/{id}/')
-  // Future<AlbumModel> read(@Path() String id);
+  @GET('/api/musics/album/{id}/')
+  Future<AlbumModel> read(@Path() String id);
 
-  // @PATCH('/api/commons/expertise/{id}/')
-  // Future<AlbumModel> update(
-  //     @Path() String id, @Body() AlbumModel model);
+  @PATCH('/api/musics/album/{id}/')
+  Future<void> update(@Path() String id, @Body() FormData data);
 
-  // @DELETE('/api/commons/expertise/{id}/')
-  // Future<HttpResponse> delete(@Path() String id);
+  @DELETE('/api/musics/album/{id}/')
+  Future<HttpResponse> delete(@Path() String id);
 }

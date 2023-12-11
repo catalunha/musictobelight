@@ -10,14 +10,29 @@ part 'album_model.g.dart';
 class AlbumModel with _$AlbumModel {
   @JsonSerializable(includeIfNull: false)
   factory AlbumModel({
-    String? name,
+    required String id,
+    required String name,
     String? description,
-    ProfileModel? coordinator,
+    required ProfileModel coordinator,
     ImageModel? image,
     @Default([]) List<ProfileModel> listeners,
   }) = _AlbumModel;
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
       _$AlbumModelFromJson(json);
+}
+
+@freezed
+class AlbumUpsertModel with _$AlbumUpsertModel {
+  @JsonSerializable(includeIfNull: false)
+  factory AlbumUpsertModel({
+    String? id,
+    required String name,
+    String? description,
+    required String coordinator,
+    @Default([]) List<String> listeners,
+  }) = _AlbumUpsertModel;
+  factory AlbumUpsertModel.fromJson(Map<String, dynamic> json) =>
+      _$AlbumUpsertModelFromJson(json);
 }
 
 @freezed
