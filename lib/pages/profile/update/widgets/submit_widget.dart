@@ -21,12 +21,12 @@ class SubmitWidget extends ConsumerWidget {
         onPressed: () {
           final formValid = formKey.currentState?.validate() ?? false;
           if (formValid) {
-            // ref.read(profileUpdateControllerProvider.notifier).submitForm(
-            //       name: name.text.trim(),
-            //       description: description.text.trim(),
-            //     );
+            ref.read(profileUpdateControllerProvider.notifier).submitForm(
+                  name: name.text.trim(),
+                  description: description.text.trim(),
+                );
           }
         },
-        child: const Text('Conferido e Atualizado'));
+        child: const Text('Atualizar'));
   }
 }

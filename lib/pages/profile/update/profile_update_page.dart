@@ -79,19 +79,9 @@ class ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage>
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // InfoWidget(
-                    //   title: 'Id',
-                    //   info: profile!.id.substring(0, 8),
-                    // ),
-                    const Text('Confira e mantenha seus dados atualizados'),
-                    Wrap(
-                      children: [
-                        InfoWidget(
-                          title: 'É coordenador ?',
-                          info: profile.isCoordinator ? "Sim" : "Não",
-                        ),
-                      ],
-                    ),
+                    if (profile.isCoordinator)
+                      const Text(
+                          'Você é um coordenador. Pode gerenciar albuns.'),
                     AppTextFormField(
                       label: 'Seu nome',
                       hint: 'Completo',
@@ -101,21 +91,23 @@ class ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage>
                       label: 'Sua descrição',
                       hint: 'Completa',
                       textEditingController: description,
+                      maxLines: 5,
                     ),
-                    AppImportImage(
-                      label:
-                          'Click aqui para buscar sua foto, apenas face. Padrão 3x4.',
-                      imageUrl: profile.photo?.image == null
-                          ? null
-                          : const bool.fromEnvironment('development_mode')
-                              ? '${ApiV1EndPoints.baseurl}${profile.photo!.image}'
-                              : profile.photo!.image,
-                      setXFile: (value) {
-                        ref.watch(xFileAvatarProvider.notifier).set(value);
-                      },
-                      maxHeightImage: 150,
-                      maxWidthImage: 100,
-                    ),
+                    const SizedBox(height: 20),
+                    // AppImportImage(
+                    //   label: 'Click aqui para buscar uma imagem.',
+                    //   imageUrl: profile.photo?.image == null
+                    //       ? null
+                    //       : const bool.fromEnvironment('development_mode')
+                    //           ? '${ApiV1EndPoints.baseurl}${profile.photo!.image}'
+                    //           : profile.photo!.image,
+                    //   setXFile: (value) {
+                    //     ref.watch(xFileAvatarProvider.notifier).set(value);
+                    //   },
+                    //   maxHeightImage: 150,
+                    //   maxWidthImage: 100,
+                    // ),
+                    const SizedBox(height: 20),
                     SubmitWidget(
                       formKey: formKey,
                       name: name,

@@ -5,8 +5,12 @@ import '../core/functional_program/either.dart';
 import '../data/providers.dart';
 import '../models/profile_model.dart';
 import '../models/user_model.dart';
+import 'album/album_repository.dart';
+import 'album/album_repository_impl.dart';
 import 'profile/profile_repository.dart';
 import 'profile/profile_repository_impl.dart';
+import 'sound/sound_repository.dart';
+import 'sound/sound_repository_impl.dart';
 import 'user/user_repository.dart';
 import 'user/user_repository_impl.dart';
 
@@ -20,6 +24,16 @@ UserRepository userRepository(UserRepositoryRef ref) {
 @Riverpod(keepAlive: true)
 ProfileRepository profileRepository(ProfileRepositoryRef ref) {
   return ProfileRepositoryImpl(dioClient: ref.read(dioClientProvider));
+}
+
+@Riverpod(keepAlive: true)
+AlbumRepository albumRepository(AlbumRepositoryRef ref) {
+  return AlbumRepositoryImpl(dioClient: ref.read(dioClientProvider));
+}
+
+@Riverpod(keepAlive: true)
+SoundRepository soundRepository(SoundRepositoryRef ref) {
+  return SoundRepositoryImpl(dioClient: ref.read(dioClientProvider));
 }
 
 @Riverpod(keepAlive: true)

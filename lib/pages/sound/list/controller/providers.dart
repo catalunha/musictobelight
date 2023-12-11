@@ -1,14 +1,16 @@
+import 'package:musictobeligth/pages/home/controller/providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/functional_program/either.dart';
-import '../../../../models/album_model.dart';
+import '../../../../../core/functional_program/either.dart';
+import '../../../../../models/sound_model.dart';
 import '../../../../repositories/providers.dart';
 
 part 'providers.g.dart';
 
 @riverpod
-FutureOr<List<AlbumModelList>> albumList(AlbumListRef ref) async {
-  final result = await ref.read(albumRepositoryProvider).list();
+FutureOr<List<SoundModelList>> soundList(SoundListRef ref) async {
+  final album = ref.watch(albumSelectedProvider);
+  final result = await ref.read(soundRepositoryProvider).list(album);
 
   return switch (result) {
     Failure(:final exception) =>
@@ -18,7 +20,7 @@ FutureOr<List<AlbumModelList>> albumList(AlbumListRef ref) async {
 }
 
 @riverpod
-class AlbumSelected extends _$AlbumSelected {
+class SoundIdSelected extends _$SoundIdSelected {
   @override
   String build() {
     return '';

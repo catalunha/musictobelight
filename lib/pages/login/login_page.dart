@@ -37,7 +37,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
     // TODO remover email login preenchidos para testes
     if (const bool.fromEnvironment('development_mode')) {
       email.text = 'catalunha.mj@gmail.com';
-      password.text = 'cata-123QWE!@#';
+      password.text = '123456';
     }
   }
 

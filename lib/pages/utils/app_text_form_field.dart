@@ -8,6 +8,7 @@ class AppTextFormField extends StatefulWidget {
   final String? hint;
   final FormFieldValidator<String>? validator;
   final Key? textFormFieldKey;
+  final int? maxLines;
   const AppTextFormField({
     Key? key,
     required this.textEditingController,
@@ -15,6 +16,7 @@ class AppTextFormField extends StatefulWidget {
     this.hint,
     this.validator,
     this.textFormFieldKey,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           fontSize: AppFontSize.fontSizeMedium,
         ),
         onTapOutside: (_) => FocusScope.of(context).unfocus(),
-        // maxLines: 2,
+        maxLines: widget.maxLines,
         decoration: InputDecoration(
           label: Text(widget.label),
           hintText: widget.hint,

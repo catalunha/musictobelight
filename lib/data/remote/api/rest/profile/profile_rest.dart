@@ -13,7 +13,7 @@ abstract class ProfileRest {
   @GET('/api/accounts/profile/me/')
   Future<ProfileModel> me();
 
-  //Nao existe create profile. Ele é criado na criacao do user
+  //Nao existe create profile. Ele é criado na criação do user
 
   @GET('/api/accounts/profile/')
   Future<List<ProfileModel>> list();

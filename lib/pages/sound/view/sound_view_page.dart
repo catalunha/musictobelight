@@ -3,31 +3,30 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../routes_root.dart';
+import '../../../routes_root.dart';
 import 'controller/controllers.dart';
 import 'widgets/player_widget.dart';
 
-class AudioPlayerTesting extends ConsumerStatefulWidget {
+class SoundViewPage extends ConsumerStatefulWidget {
   final String urlAudio;
-  const AudioPlayerTesting({
+  const SoundViewPage({
     super.key,
     required this.urlAudio,
   });
 
   @override
-  ConsumerState<AudioPlayerTesting> createState() =>
-      _AudioPlayerTesting2State();
+  ConsumerState<SoundViewPage> createState() => _SoundViewPage2State();
 }
 
-class _AudioPlayerTesting2State extends ConsumerState<AudioPlayerTesting> {
+class _SoundViewPage2State extends ConsumerState<SoundViewPage> {
   @override
   Widget build(BuildContext context) {
-    log('AudioPlayerTesting2.build');
+    log('SoundViewPage2.build');
     final audioController = ref.watch(audioControllerProvider(widget.urlAudio));
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AudioPlayerTesting 2'),
+        title: const Text('SoundViewPage 2'),
         actions: [
           IconButton(
               onPressed: () {

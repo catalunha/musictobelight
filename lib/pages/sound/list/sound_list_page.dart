@@ -3,55 +3,52 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../repositories/providers.dart';
-import '../utils/app_loader.dart';
-import '../utils/app_messages.dart';
+import '../../../repositories/providers.dart';
+import '../../utils/app_loader.dart';
+import '../../utils/app_messages.dart';
 import 'controller/providers.dart';
-import 'widgets/album_card.dart';
-import 'widgets/home_popmenu.dart';
+import 'widgets/sound_card.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class SoundListPage extends ConsumerStatefulWidget {
+  const SoundListPage({super.key});
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<SoundListPage> createState() => _SoundListPageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage>
+class _SoundListPageState extends ConsumerState<SoundListPage>
     with AppMessages, AppLoader {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(meProfileProvider)!;
-    final list = ref.watch(albumListProvider);
+    final list = ref.watch(soundListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Olá, ${profile.name ?? profile.user.email}'),
-        actions: const [HomePopMenu()],
+        title: const Text('Lista de músicas'),
       ),
       body: list.when(data: (data) {
         if (data.isEmpty) {
           return const Center(
             child: Text(
-                textAlign: TextAlign.center,
-                'Peça ao seu coordenador para incluir seu email em algum album. Assim você poderá ver os albuns de músicas da sua comunidade.'),
+                textAlign: TextAlign.center, 'Não há músicas neste album.'),
           );
         } else {
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
               final model = data[index];
-              return AlbumCard(
+              return SoundCard(
                 model: model,
               );
             },
           );
         }
       }, error: (error, stackTrace) {
-        log('Erro em Lista de albuns');
+        log('Erro em Lista de músicas');
         log('$error');
         log('$stackTrace');
         return const Center(
-          child: Text('Erro em Lista de albuns'),
+          child: Text('Erro em Lista de músicas'),
         );
       }, loading: () {
         return const Center(
