@@ -94,19 +94,19 @@ class ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage>
                       maxLines: 5,
                     ),
                     const SizedBox(height: 20),
-                    // AppImportImage(
-                    //   label: 'Click aqui para buscar uma imagem.',
-                    //   imageUrl: profile.photo?.image == null
-                    //       ? null
-                    //       : const bool.fromEnvironment('development_mode')
-                    //           ? '${ApiV1EndPoints.baseurl}${profile.photo!.image}'
-                    //           : profile.photo!.image,
-                    //   setXFile: (value) {
-                    //     ref.watch(xFileAvatarProvider.notifier).set(value);
-                    //   },
-                    //   maxHeightImage: 150,
-                    //   maxWidthImage: 100,
-                    // ),
+                    AppImportImage(
+                      label: 'Click aqui para buscar uma imagem.',
+                      imageUrl: profile.photo?.image == null
+                          ? null
+                          : const bool.fromEnvironment('development_mode')
+                              ? '${ApiV1EndPoints.baseurl}${profile.photo!.image}'
+                              : profile.photo!.image,
+                      setXFile: (value) {
+                        ref.watch(xFileAvatarProvider.notifier).set(value);
+                      },
+                      maxHeightImage: 150,
+                      maxWidthImage: 100,
+                    ),
                     const SizedBox(height: 20),
                     SubmitWidget(
                       formKey: formKey,
