@@ -18,8 +18,8 @@ class SoundCard extends ConsumerWidget {
         subtitle: Text(model.author.name ?? model.author.user.email),
         // trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
         onTap: () {
-          ref.read(soundSelectedProvider.notifier).set(model.id);
-          Navigator.of(context).pushNamed(RoutesRoot.home);
+          ref.watch(soundIdSelectedProvider.notifier).set(model.id);
+          Navigator.of(context).pushNamed(RoutesRoot.soundView);
         },
       ),
     );

@@ -18,7 +18,7 @@ FutureOr<List<AlbumModelList>> albumList(AlbumListRef ref) async {
 }
 
 @riverpod
-class AlbumSelected extends _$AlbumSelected {
+class AlbumIdSelected extends _$AlbumIdSelected {
   @override
   String build() {
     return '';

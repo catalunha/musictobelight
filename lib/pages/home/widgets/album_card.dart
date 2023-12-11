@@ -17,7 +17,7 @@ class AlbumCard extends ConsumerWidget {
         subtitle: Text(model.coordinator.name ?? model.coordinator.user.email),
         // trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
         onTap: () {
-          ref.watch(albumSelectedProvider.notifier).set(model.id);
+          ref.watch(albumIdSelectedProvider.notifier).set(model.id);
           Navigator.of(context).pushNamed(RoutesRoot.soundList);
         },
       ),

@@ -9,7 +9,7 @@ part 'providers.g.dart';
 
 @riverpod
 FutureOr<List<SoundModelList>> soundList(SoundListRef ref) async {
-  final album = ref.watch(albumSelectedProvider);
+  final album = ref.watch(albumIdSelectedProvider);
   final result = await ref.read(soundRepositoryProvider).list(album);
 
   return switch (result) {

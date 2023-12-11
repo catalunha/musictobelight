@@ -36,10 +36,7 @@ Route<dynamic> onGenerateRouteRoot(RouteSettings settings) {
       builder = (_) => const SoundListPage();
       break;
     case RoutesRoot.soundView:
-      final arg = settings.arguments as String;
-      builder = (_) => AudioPlayerTesting(
-            urlAudio: arg,
-          );
+      builder = (_) => const SoundViewPage();
       break;
     default:
       builder = (_) => const NotFound404();

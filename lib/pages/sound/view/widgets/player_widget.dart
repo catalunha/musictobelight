@@ -121,21 +121,24 @@ class _PlayerWidgetState extends State<PlayerWidget>
             ),
           ],
         ),
-        Slider(
-          onChanged: (value) {
-            final duration = _duration;
-            if (duration == null) {
-              return;
-            }
-            final position = value * duration.inMilliseconds;
-            player.seek(Duration(milliseconds: position.round()));
-          },
-          value: (_position != null &&
-                  _duration != null &&
-                  _position!.inMilliseconds > 0 &&
-                  _position!.inMilliseconds < _duration!.inMilliseconds)
-              ? _position!.inMilliseconds / _duration!.inMilliseconds
-              : 0.0,
+        SizedBox(
+          width: 300,
+          child: Slider(
+            onChanged: (value) {
+              final duration = _duration;
+              if (duration == null) {
+                return;
+              }
+              final position = value * duration.inMilliseconds;
+              player.seek(Duration(milliseconds: position.round()));
+            },
+            value: (_position != null &&
+                    _duration != null &&
+                    _position!.inMilliseconds > 0 &&
+                    _position!.inMilliseconds < _duration!.inMilliseconds)
+                ? _position!.inMilliseconds / _duration!.inMilliseconds
+                : 0.0,
+          ),
         ),
         Text(
           _position != null

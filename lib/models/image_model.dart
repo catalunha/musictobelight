@@ -7,7 +7,7 @@ part 'image_model.g.dart';
 class ImageModel with _$ImageModel {
   @JsonSerializable(includeIfNull: false)
   factory ImageModel({
-    String? image,
+    required String image,
   }) = _ImageModel;
   factory ImageModel.fromJson(Map<String, dynamic> json) =>
       _$ImageModelFromJson(json);

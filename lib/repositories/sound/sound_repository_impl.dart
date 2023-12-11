@@ -36,11 +36,12 @@ class SoundRepositoryImpl implements SoundRepository {
       return Failure(RepositoryException(message: e.message));
     }
   }
-/*
+
   @override
   Future<Either<RepositoryException, SoundModel>> read(String id) async {
     try {
       final soundRest = SoundRest(dioClient.auth);
+      log('read $id');
       final soundModel = await soundRest.read(id);
       return Success(soundModel);
     } on DioException catch (e, s) {
@@ -55,7 +56,7 @@ class SoundRepositoryImpl implements SoundRepository {
       return Failure(RepositoryException(message: e.message));
     }
   }
-
+/*
   @override
   Future<Either<RepositoryException, SoundModel>> create(
       SoundModel soundModel) async {

@@ -7,7 +7,7 @@ part 'audio_model.g.dart';
 class AudioModel with _$AudioModel {
   @JsonSerializable(includeIfNull: false)
   factory AudioModel({
-    String? audio,
+    required String audio,
   }) = _AudioModel;
   factory AudioModel.fromJson(Map<String, dynamic> json) =>
       _$AudioModelFromJson(json);

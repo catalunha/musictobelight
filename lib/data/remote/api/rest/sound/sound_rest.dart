@@ -18,8 +18,8 @@ abstract class SoundRest {
   @GET('/api/musics/sound/')
   Future<List<SoundModelList>> list(@Queries() AlbumIdDto idDto);
 
-  // @GET('/api/commons/expertise/{id}/')
-  // Future<SoundModel> read(@Path() String id);
+  @GET('/api/musics/sound/{id}/')
+  Future<SoundModel> read(@Path() String id);
 
   // @PATCH('/api/commons/expertise/{id}/')
   // Future<SoundModel> update(
