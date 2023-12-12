@@ -91,8 +91,7 @@ class _AppImportImageState extends State<AppImportImage> {
           maxHeight: widget.maxHeightImage,
           maxWidth: widget.maxWidthImage,
         );
-
-        if (pickedFile != null) {
+        if (pickedFile != null && pickedFile.path.endsWith("png")) {
           widget.setXFile(pickedFile);
           setState(() {
             _xfile = pickedFile;

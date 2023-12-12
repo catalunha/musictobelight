@@ -58,16 +58,11 @@ class _AppImportFileState extends State<AppImportFile> {
         onTap: () async {
           final FilePickerResult? pickedFile =
               await FilePicker.platform.pickFiles(
-            type: FileType.any,
+            type: FileType.custom,
+            allowedExtensions: ['mp3'],
             withData: true,
           );
-
           if (pickedFile != null) {
-            // Uint8List? fileBytes = pickedFile.files.single.bytes;
-            // String fileName = pickedFile.files.first.name;
-            // print('name00: $fileName');
-            // print('bytes00: $fileBytes');
-            // print('bytes00: ${pickedFile.files.first.bytes}');
             widget.setFilePickerResult(pickedFile);
             setState(() {
               _filePickerResult = pickedFile;
