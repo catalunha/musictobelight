@@ -21,6 +21,7 @@ class AlbumRepositoryImpl implements AlbumRepository {
     try {
       final albumRest = AlbumRest(dioClient.auth);
       final albumModelList = await albumRest.list();
+      log('albumModelList: ${albumModelList.length}');
       return Success(albumModelList);
     } on DioException catch (e, s) {
       log('Erro de DioException em AlbumRepositoryImpl.list',

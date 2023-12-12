@@ -7,7 +7,9 @@ import '../../../../core/functional_program/either.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../models/album_model.dart';
+import '../../../../models/profile_model.dart';
 import '../../../../repositories/providers.dart';
+import '../../../utils/state_status.dart';
 import '../../list/controller/providers.dart';
 import 'states.dart';
 
@@ -23,7 +25,10 @@ FutureOr<AlbumModel?> albumRead(AlbumReadRef ref, {required String? id}) async {
         return throw AsyncError(exception.message, StackTrace.current);
       case Success(:final value):
         ref.watch(albumUpsertControllerProvider.notifier).setModel(value);
-
+        for (var prof in value.listeners) {
+          ref.read(profileSelectedProvider.notifier).add(prof);
+        }
+        log('listeners: ${value.listeners.length}');
         return value;
     }
   }
@@ -48,8 +53,14 @@ class AlbumUpsertController extends _$AlbumUpsertController {
     state = state.copyWith(status: AlbumUpsertStatus.loading);
     Either either;
     final profile = ref.watch(meProfileProvider)!;
+    final profileSelected = ref.watch(profileSelectedProvider);
     try {
-      FormData data = FormData();
+      FormData data = FormData.fromMap({
+        "name": name,
+        "description": description,
+        "coordinator": profile.id,
+        "listeners": profileSelected.list.map((e) => e.id).toList()
+      });
       final xFile = ref.read(xFileAvatarProvider);
       if (xFile != null) {
         // final fileExtension = xFile.name.split('.').last;
@@ -64,19 +75,10 @@ class AlbumUpsertController extends _$AlbumUpsertController {
         ));
       }
       if (state.model != null) {
-        data.fields.add(MapEntry("name", name));
-        if (description != null && description.isEmpty) {
-          data.fields.add(MapEntry("description", description));
-        }
         either = await ref
             .read(albumRepositoryProvider)
             .update(state.model!.id, data);
       } else {
-        data.fields.add(MapEntry("name", name));
-        data.fields.add(MapEntry("coordinator", profile.id));
-        if (description != null && description.isEmpty) {
-          data.fields.add(MapEntry("description", description));
-        }
         either = await ref.read(albumRepositoryProvider).create(data);
       }
       switch (either) {
@@ -126,5 +128,58 @@ class XFileAvatar extends _$XFileAvatar {
 
   void set(XFile? value) {
     state = value;
+  }
+}
+
+@riverpod
+class ProfileSelected extends _$ProfileSelected {
+  @override
+  ProfileSelectState build() {
+    return ProfileSelectState();
+  }
+
+  Future<void> getByEmail(String email) async {
+    state = state.copyWith(status: StateStatus.loading);
+    final either = await ref.read(profileRepositoryProvider).getByEmail(email);
+    switch (either) {
+      case Failure():
+        state = state.copyWith(
+          status: StateStatus.error,
+          message: 'Não foi encontrado nenhum usuário com este email.',
+        );
+        break;
+      case Success(:final value):
+        final meProfile = ref.watch(meProfileProvider);
+        if (meProfile!.id == value.id) {
+          state = state.copyWith(
+            status: StateStatus.error,
+            message:
+                'Não precisa se incluir como ouvinte de um album se você é gestor dele.',
+          );
+        } else {
+          add(value);
+          state = state.copyWith(
+            status: StateStatus.update,
+            message: 'Usuário encontrado e adicionado a lista.',
+          );
+        }
+        break;
+    }
+  }
+
+  void add(ProfileListModel model) {
+    final int index = state.list.indexWhere((value) => value.id == model.id);
+    if (index < 0) {
+      state = state.copyWith(list: [...state.list, model]);
+    }
+  }
+
+  void delete(ProfileListModel model) {
+    final int index = state.list.indexWhere((value) => value.id == model.id);
+    if (index >= 0) {
+      final List<ProfileListModel> temp = [...state.list];
+      temp.removeAt(index);
+      state = state.copyWith(list: [...temp]);
+    }
   }
 }

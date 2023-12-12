@@ -20,3 +20,16 @@ abstract class ProfileModel with _$ProfileModel {
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
 }
+
+@freezed
+abstract class ProfileListModel with _$ProfileListModel {
+  @JsonSerializable(includeIfNull: false)
+  factory ProfileListModel({
+    required String id,
+    required UserModel user,
+    String? name,
+    ImageModel? photo,
+  }) = _ProfileListModel;
+  factory ProfileListModel.fromJson(Map<String, dynamic> json) =>
+      _$ProfileListModelFromJson(json);
+}

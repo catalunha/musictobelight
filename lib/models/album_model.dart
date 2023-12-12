@@ -15,7 +15,7 @@ class AlbumModel with _$AlbumModel {
     String? description,
     required ProfileModel coordinator,
     ImageModel? image,
-    @Default([]) List<ProfileModel> listeners,
+    @Default([]) List<ProfileListModel> listeners,
   }) = _AlbumModel;
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
       _$AlbumModelFromJson(json);

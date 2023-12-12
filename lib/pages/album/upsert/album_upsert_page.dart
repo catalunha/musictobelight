@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musictobeligth/pages/album/upsert/widgets/profile_card.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../utils/app_delete.dart';
@@ -9,8 +10,11 @@ import '../../utils/app_import_image.dart';
 import '../../utils/app_loader.dart';
 import '../../utils/app_messages.dart';
 import '../../utils/app_text_form_field.dart';
+import '../../utils/state_status.dart';
 import 'controller/providers.dart';
 import 'controller/states.dart';
+import 'widgets/get_by_email_dialog.dart';
+import 'widgets/profile_selected_list_widget.dart';
 
 class AlbumUpsertPage extends ConsumerStatefulWidget {
   final String? id;
@@ -57,8 +61,23 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
         showLoader(context);
       }
     });
-
+    ref.listen<ProfileSelectState>(profileSelectedProvider,
+        (previous, next) async {
+      if (next.status == StateStatus.error) {
+        hideLoader(context);
+        showMessageError(context, next.message);
+      }
+      if (next.status == StateStatus.update) {
+        hideLoader(context);
+        showMessageInfo(context, next.message);
+      }
+      if (next.status == StateStatus.loading) {
+        showLoader(context);
+      }
+    });
     final albumRead = ref.watch(albumReadProvider(id: widget.id));
+    // final profileSelected = ref.watch(profileSelectedProvider);
+    // ref.watch(profileSelectedProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Album : ${widget.id == null ? "criar" : "editar"}'),
@@ -120,6 +139,32 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
                           maxHeightImage: 150,
                           maxWidthImage: 100,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Buscar usuário por email '),
+                            ElevatedButton(
+                                onPressed: () async {
+                                  final String? email = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return const GetByEmailDialog();
+                                    },
+                                  );
+                                  if (mounted) {
+                                    if (email != null && email.isNotEmpty) {
+                                      ref
+                                          .read(
+                                              profileSelectedProvider.notifier)
+                                          .getByEmail(email);
+                                    }
+                                  }
+                                },
+                                child: const Icon(Icons.search))
+                          ],
+                        ),
+                        const ProfileSelectedListWidget(),
                         AppDelete(
                           isVisible: data != null,
                           action: () {

@@ -46,6 +46,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
+/*
   @override
   Future<Either<RepositoryException, List<ProfileModel>>> list() async {
     try {
@@ -68,12 +69,31 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Failure(RepositoryException(message: e.message));
     }
   }
-
+*/
   @override
-  Future<Either<RepositoryException, ProfileModel>> read(String id) async {
+  Future<Either<RepositoryException, ProfileListModel>> read(String id) async {
     try {
       final profileRest = ProfileRest(dioClient.auth);
       final profileModel = await profileRest.read(id);
+      return Success(profileModel);
+    } on DioException catch (e, s) {
+      log('Erro de DioException em ProfileRepositoryImpl.read',
+          name: 'ProfileRepositoryImpl.read', error: e, stackTrace: s);
+      return Failure(RepositoryException(
+          message: 'Erro de DioException em ProfileRepositoryImpl.read'));
+    } on ArgumentError catch (e, s) {
+      log('Erro de ArgumentError em ProfileRepositoryImpl.read',
+          name: 'ProfileRepositoryImpl.list', error: e, stackTrace: s);
+      return Failure(RepositoryException(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<RepositoryException, ProfileListModel>> getByEmail(
+      String email) async {
+    try {
+      final profileRest = ProfileRest(dioClient.auth);
+      final profileModel = await profileRest.getByEmail(email);
       return Success(profileModel);
     } on DioException catch (e, s) {
       log('Erro de DioException em ProfileRepositoryImpl.read',

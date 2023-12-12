@@ -15,11 +15,14 @@ abstract class ProfileRest {
 
   //Nao existe create profile. Ele é criado na criação do user
 
-  @GET('/api/accounts/profile/')
-  Future<List<ProfileModel>> list();
+  // @GET('/api/accounts/profile/')
+  // Future<List<ProfileModel>> list();
 
   @GET('/api/accounts/profile/{id}/')
-  Future<ProfileModel> read(@Path() String id);
+  Future<ProfileListModel> read(@Path() String id);
+
+  @GET('/api/accounts/profile/getbyemail/{email}/')
+  Future<ProfileListModel> getByEmail(@Path() String email);
 
   @PATCH('/api/accounts/profile/{id}/')
   Future<ProfileModel> update(@Path() String id, @Body() FormData data);
