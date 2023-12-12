@@ -19,7 +19,6 @@ class _SoundListPageState extends ConsumerState<SoundListPage>
     with AppMessages, AppLoader {
   @override
   Widget build(BuildContext context) {
-    final profile = ref.watch(meProfileProvider)!;
     final list = ref.watch(soundListProvider);
 
     return Scaffold(
@@ -29,8 +28,16 @@ class _SoundListPageState extends ConsumerState<SoundListPage>
       body: list.when(data: (data) {
         if (data.isEmpty) {
           return const Center(
-            child: Text(
-                textAlign: TextAlign.center, 'Não há músicas neste album.'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    textAlign: TextAlign.center, 'Não há músicas neste album.'),
+                Text(
+                    textAlign: TextAlign.center,
+                    'Peça a seu coordenador para adicioná-las.'),
+              ],
+            ),
           );
         } else {
           return ListView.builder(
@@ -48,7 +55,12 @@ class _SoundListPageState extends ConsumerState<SoundListPage>
         log('$error');
         log('$stackTrace');
         return const Center(
-          child: Text('Erro em Lista de músicas'),
+          child: Column(
+            children: [
+              Text('Erro em Lista de músicas.'),
+              Text('Entre em contato com https://t.me/+YM7CPlJxW5Y5MjM5'),
+            ],
+          ),
         );
       }, loading: () {
         return const Center(
