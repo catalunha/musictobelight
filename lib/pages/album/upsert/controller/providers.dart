@@ -174,8 +174,8 @@ class ProfileSelected extends _$ProfileSelected {
     }
   }
 
-  void delete(ProfileListModel model) {
-    final int index = state.list.indexWhere((value) => value.id == model.id);
+  void delete(String profileId) {
+    final int index = state.list.indexWhere((value) => value.id == profileId);
     if (index >= 0) {
       final List<ProfileListModel> temp = [...state.list];
       temp.removeAt(index);
