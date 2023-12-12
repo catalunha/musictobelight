@@ -56,7 +56,7 @@ class UserServiceImpl implements UserService {
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
     Navigator.of(NavigationGlobalKey.instance.navigationKey.currentContext!)
-        .pushNamedAndRemoveUntil(RouteName.login, (route) => false);
+        .pushNamedAndRemoveUntil(RouteNameRoot.login, (route) => false);
   }
 
   // @override

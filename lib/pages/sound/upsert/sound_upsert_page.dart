@@ -1,10 +1,13 @@
 import 'dart:developer';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musictobeligth/pages/sound/upsert/widgets/profile_card.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../utils/app_delete.dart';
+import '../../utils/app_import_file.dart';
 import '../../utils/app_import_image.dart';
 import '../../utils/app_loader.dart';
 import '../../utils/app_messages.dart';
@@ -15,22 +18,23 @@ import 'controller/states.dart';
 import 'widgets/get_by_email_dialog.dart';
 import 'widgets/profile_selected_list_widget.dart';
 
-class AlbumUpsertPage extends ConsumerStatefulWidget {
+class SoundUpsertPage extends ConsumerStatefulWidget {
   final String? id;
-  const AlbumUpsertPage({
+  const SoundUpsertPage({
     super.key,
     required this.id,
   });
 
   @override
-  ConsumerState<AlbumUpsertPage> createState() => _AlbumSavePageState();
+  ConsumerState<SoundUpsertPage> createState() => _SoundSavePageState();
 }
 
-class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
+class _SoundSavePageState extends ConsumerState<SoundUpsertPage>
     with AppLoader, AppMessages {
   final _formKey = GlobalKey<FormState>();
   final _nameTec = TextEditingController();
   final _descriptionTec = TextEditingController();
+  String? audioUrl;
   @override
   void initState() {
     super.initState();
@@ -46,17 +50,17 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AlbumUpsertState>(albumUpsertControllerProvider,
+    ref.listen<SoundUpsertState>(soundUpsertControllerProvider,
         (previous, next) async {
-      if (next.status == AlbumUpsertStatus.error) {
+      if (next.status == SoundUpsertStatus.error) {
         hideLoader(context);
         showMessageError(context, next.error);
       }
-      if (next.status == AlbumUpsertStatus.success) {
+      if (next.status == SoundUpsertStatus.success) {
         hideLoader(context);
         Navigator.of(context).pop();
       }
-      if (next.status == AlbumUpsertStatus.loading) {
+      if (next.status == SoundUpsertStatus.loading) {
         showLoader(context);
       }
     });
@@ -74,18 +78,18 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
         showLoader(context);
       }
     });
-    final albumRead = ref.watch(albumReadProvider(id: widget.id));
+    final soundRead = ref.watch(soundReadProvider(id: widget.id));
     // final profileSelected = ref.watch(profileSelectedProvider);
     // ref.watch(profileSelectedProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Album : ${widget.id == null ? "criar" : "editar"}'),
+        title: Text('Sound : ${widget.id == null ? "criar" : "editar"}'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final formValid = _formKey.currentState?.validate() ?? false;
           if (formValid) {
-            ref.read(albumUpsertControllerProvider.notifier).submitForm(
+            ref.read(soundUpsertControllerProvider.notifier).submitForm(
                   name: _nameTec.text,
                   description: _descriptionTec.text,
                 );
@@ -93,13 +97,15 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
         },
         child: const Icon(Icons.cloud_upload),
       ),
-      body: albumRead.when(
+      body: soundRead.when(
         data: (data) {
           String? imageUrl;
+
           if (data != null) {
-            final formState = ref.read(albumUpsertControllerProvider);
+            final formState = ref.read(soundUpsertControllerProvider);
             _nameTec.text = formState.model?.name ?? '';
             _descriptionTec.text = formState.model?.description ?? '';
+            audioUrl = formState.model?.audio.audio ?? '';
             if (formState.model?.image != null &&
                 const bool.fromEnvironment('development_mode')) {
               imageUrl =
@@ -108,6 +114,7 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
               imageUrl = formState.model?.image?.image;
             }
           }
+
           return Center(
             child: Form(
               key: _formKey,
@@ -116,15 +123,17 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
                 child: Center(
                   child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         AppTextFormField(
-                          label: '* Nome do album',
+                          label: '* Nome da musica',
                           textEditingController: _nameTec,
                           validator: Validatorless.required(
                               'Esta informação é obrigatória'),
                         ),
                         AppTextFormField(
-                          label: 'Descrição do album',
+                          label: 'Descrição da musica',
                           textEditingController: _descriptionTec,
                           maxLines: 3,
                         ),
@@ -141,7 +150,7 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Buscar usuário por email '),
+                            const Text('Buscar autor por email '),
                             ElevatedButton(
                                 onPressed: () async {
                                   final String? email = await showDialog(
@@ -163,12 +172,20 @@ class _AlbumSavePageState extends ConsumerState<AlbumUpsertPage>
                                 child: const Icon(Icons.search))
                           ],
                         ),
-                        const ProfileSelectedListWidget(),
+                        const ProfileSelectedWidget(),
+                        Center(
+                          child: AppImportFile(
+                            setFilePickerResult: (FilePickerResult? value) {
+                              ref.watch(getAudioProvider.notifier).set(value);
+                            },
+                          ),
+                        ),
+                        Text('$audioUrl'),
                         AppDelete(
                           isVisible: data != null,
                           action: () {
                             ref
-                                .read(albumUpsertControllerProvider.notifier)
+                                .read(soundUpsertControllerProvider.notifier)
                                 .delete();
                           },
                         ),

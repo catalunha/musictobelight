@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../repositories/providers.dart';
+import '../../../routes_root.dart';
+import '../../album/list/controller/providers.dart';
 import '../../utils/app_loader.dart';
 import '../../utils/app_messages.dart';
 import 'controller/providers.dart';
@@ -20,53 +22,69 @@ class _SoundListPageState extends ConsumerState<SoundListPage>
   @override
   Widget build(BuildContext context) {
     final list = ref.watch(soundListProvider);
+    final profile = ref.watch(meProfileProvider)!;
+    final album = ref.watch(albumSelectedProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de músicas'),
       ),
-      body: list.when(data: (data) {
-        if (data.isEmpty) {
+      body: list.when(
+        data: (data) {
+          if (data.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                      textAlign: TextAlign.center,
+                      'Não há músicas neste album.'),
+                  Text(
+                      textAlign: TextAlign.center,
+                      'Peça a seu coordenador para adicioná-las.'),
+                ],
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final model = data[index];
+                return SoundCard(
+                  model: model,
+                );
+              },
+            );
+          }
+        },
+        error: (error, stackTrace) {
+          log('Erro em Lista de músicas');
+          log('$error');
+          log('$stackTrace');
           return const Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    textAlign: TextAlign.center, 'Não há músicas neste album.'),
-                Text(
-                    textAlign: TextAlign.center,
-                    'Peça a seu coordenador para adicioná-las.'),
+                Text('Erro em Lista de músicas.'),
+                Text('Entre em contato com https://t.me/+YM7CPlJxW5Y5MjM5'),
               ],
             ),
           );
-        } else {
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final model = data[index];
-              return SoundCard(
-                model: model,
-              );
-            },
+        },
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        }
-      }, error: (error, stackTrace) {
-        log('Erro em Lista de músicas');
-        log('$error');
-        log('$stackTrace');
-        return const Center(
-          child: Column(
-            children: [
-              Text('Erro em Lista de músicas.'),
-              Text('Entre em contato com https://t.me/+YM7CPlJxW5Y5MjM5'),
-            ],
-          ),
-        );
-      }, loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }),
+        },
+      ),
+      floatingActionButton: profile.id == album!.coordinator.id
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(RouteNameRoot.soundUpsert, arguments: null);
+              },
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

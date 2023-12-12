@@ -6,6 +6,7 @@ import 'package:musictobeligth/routes_root.dart';
 
 import '../../../../repositories/providers.dart';
 import '../../../utils/app_view_image.dart';
+import '../controller/providers.dart';
 
 class AlbumCard extends ConsumerWidget {
   final AlbumModelList model;
@@ -34,14 +35,14 @@ class AlbumCard extends ConsumerWidget {
         trailing: profile.isCoordinator && model.coordinator.id == profile.id
             ? IconButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.albumUpsert, arguments: model.id);
+                  Navigator.of(context).pushNamed(RouteNameRoot.albumUpsert,
+                      arguments: model.id);
                 },
                 icon: const Icon(Icons.edit))
             : null,
         onTap: () {
-          ref.watch(albumIdSelectedProvider.notifier).set(model.id);
-          Navigator.of(context).pushNamed(RouteName.soundList);
+          ref.watch(albumSelectedProvider.notifier).set(model);
+          Navigator.of(context).pushNamed(RouteNameRoot.soundList);
         },
       ),
     );

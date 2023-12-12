@@ -56,13 +56,12 @@ class SoundRepositoryImpl implements SoundRepository {
       return Failure(RepositoryException(message: e.message));
     }
   }
-/*
+
   @override
-  Future<Either<RepositoryException, SoundModel>> create(
-      SoundModel soundModel) async {
+  Future<Either<RepositoryException, String>> create(FormData data) async {
     try {
       final soundRest = SoundRest(dioClient.auth);
-      final soundModelNew = await soundRest.create(soundModel);
+      final soundModelNew = await soundRest.create(data);
       return Success(soundModelNew);
     } on DioException catch (e, s) {
       log('Erro de DioException em SoundRepositoryImpl.create',
@@ -78,13 +77,12 @@ class SoundRepositoryImpl implements SoundRepository {
   }
 
   @override
-  Future<Either<RepositoryException, SoundModel>> update(
-      SoundModel soundModel) async {
+  Future<Either<RepositoryException, Nil>> update(
+      String id, FormData data) async {
     try {
       final soundRest = SoundRest(dioClient.auth);
-      final soundModelNew =
-          await soundRest.update(soundModel.id!, soundModel);
-      return Success(soundModelNew);
+      await soundRest.update(id, data);
+      return Success(Nil());
     } on DioException catch (e, s) {
       log('Erro de DioException em SoundRepositoryImpl.update',
           name: 'SoundRepositoryImpl.update', error: e, stackTrace: s);
@@ -119,5 +117,4 @@ class SoundRepositoryImpl implements SoundRepository {
       return Failure(RepositoryException(message: e as String));
     }
   }
-  */
 }

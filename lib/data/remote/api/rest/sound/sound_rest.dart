@@ -12,8 +12,8 @@ part 'sound_rest.g.dart';
 abstract class SoundRest {
   factory SoundRest(DioClient dio) = _SoundRest;
 
-  // @POST('/api/commons/expertise/')
-  // Future<SoundModel> create(@Body() SoundModel model);
+  @POST('/api/musics/sound/')
+  Future<String> create(@Body() FormData data);
 
   @GET('/api/musics/sound/')
   Future<List<SoundModelList>> list(@Queries() AlbumIdDto idDto);
@@ -21,10 +21,9 @@ abstract class SoundRest {
   @GET('/api/musics/sound/{id}/')
   Future<SoundModel> read(@Path() String id);
 
-  // @PATCH('/api/commons/expertise/{id}/')
-  // Future<SoundModel> update(
-  //     @Path() String id, @Body() SoundModel model);
+  @PATCH('/api/musics/sound/{id}/')
+  Future<void> update(@Path() String id, @Body() FormData data);
 
-  // @DELETE('/api/commons/expertise/{id}/')
-  // Future<HttpResponse> delete(@Path() String id);
+  @DELETE('/api/musics/sound/{id}/')
+  Future<HttpResponse> delete(@Path() String id);
 }

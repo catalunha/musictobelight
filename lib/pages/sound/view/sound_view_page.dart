@@ -40,7 +40,7 @@ class _SoundViewPage2State extends ConsumerState<SoundViewPage> {
                     imageUrl =
                         '${const String.fromEnvironment('url_api_dev')}${data.sound.image!.image}';
                   } else {
-                    imageUrl = data.sound.image!.image;
+                    imageUrl = data.sound.image?.image;
                   }
                   return Column(
                     children: [

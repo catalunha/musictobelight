@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,8 +6,6 @@ import '../../routes_root.dart';
 import '../album/list/album_list_page.dart';
 import '../utils/app_loader.dart';
 import '../utils/app_messages.dart';
-import 'controller/providers.dart';
-import 'widgets/album_card.dart';
 import 'widgets/home_popmenu.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -34,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage>
           ? FloatingActionButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed(RouteName.albumUpsert, arguments: null);
+                    .pushNamed(RouteNameRoot.albumUpsert, arguments: null);
               },
               child: const Icon(Icons.add),
             )
