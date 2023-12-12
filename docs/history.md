@@ -28,3 +28,7 @@ android/app/src/main/AndroidManifest.xml
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:usesCleartextTraffic="true"
+
+
+
+Aplicar designer: https://m3.material.io/components/top-app-bar/overview
